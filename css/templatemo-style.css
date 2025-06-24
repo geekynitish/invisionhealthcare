@@ -211,7 +211,7 @@ p, address {
 /* Set width and height in JS */
 .placeholder {
   width: 100%;
-  min-height: 460px;
+  min-height: 150px;
   background-color: #556E5B;
 }
 
@@ -224,7 +224,7 @@ p, address {
 }
 
 .parallax-window {
-  min-height: 460px;
+  min-height: 150px;
   background: transparent;
   position: relative;
 }
