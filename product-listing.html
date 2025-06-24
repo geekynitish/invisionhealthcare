@@ -1,11 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Primary Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Complete product catalog of Invision Health Care - WHO-GMP certified pharmaceutical products for neuropathic pain, diabetes, gastric issues and more.">
-    <meta name="keywords" content="Invision Health Care products, pharmaceutical medicines, Pregabalin tablets, diabetes medicines India, gastric relief capsules">
-    <title>Invision Health care Product Catalog | WHO-GMP Certified Medicines</title>
+    <title>Invision Health Care Products | WHO-GMP Certified Pharmaceutical Medicines</title>
+    <meta name="description" content="Complete list of Invision Health Care's pharmaceutical products including Easily-PM (Neuropathic Pain), Sayomax (Diabetes), Simtol (Gastric Relief), and Polycool (Eye Drops). WHO-GMP certified formulations.">
+    <meta name="keywords" content="pharmaceutical products list, neuropathic pain tablets, diabetes medicines India, gastric capsules, ophthalmic solutions, Pregabalin tablets, Sitagliptin Metformin, Simethicone capsules">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.invisionhealthcare.com/products">
+
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Invision Health Care Products",
+      "description": "Complete catalog of WHO-GMP certified pharmaceutical products",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Invision Health Care",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.invisionhealthcare.com/img/logo.png"
+        }
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "Product",
+              "name": "Easily-PM Tablets",
+              "description": "Pregabalin + Epalrestat + Methylcobalamin for neuropathic pain",
+              "category": "Neuropathic Pain Medicine",
+              "url": "https://www.invisionhealthcare.com/products/easily-pm"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "Product",
+              "name": "Sayomax Tablets",
+              "description": "Sitagliptin + Metformin for diabetes management",
+              "category": "Anti-Diabetic Medicine",
+              "url": "https://www.invisionhealthcare.com/products/sayomax"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -19,7 +69,6 @@
             background: #0066cc;
             color: white;
             padding: 20px;
-            text-align: center;
             margin-bottom: 30px;
             border-radius: 5px;
         }
@@ -27,16 +76,16 @@
             margin: 0;
             font-size: 2.2em;
         }
-        h2 {
-            color: #0066cc;
-            border-bottom: 2px solid #0066cc;
+        .product-category {
+            margin: 40px 0 20px;
             padding-bottom: 5px;
-            margin-top: 30px;
+            border-bottom: 2px solid #0066cc;
+            color: #0066cc;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin-bottom: 30px;
         }
         th, td {
             padding: 12px 15px;
@@ -53,9 +102,6 @@
         .prescription {
             color: #d32f2f;
             font-weight: bold;
-        }
-        .category {
-            margin-bottom: 40px;
         }
         footer {
             margin-top: 50px;
@@ -74,13 +120,13 @@
 </head>
 <body>
     <header>
-        <h1>Invision Health Care Product Catalog</h1>
+        <h1>Invision Health Care Products</h1>
         <p>WHO-GMP Certified Pharmaceutical Formulations</p>
     </header>
 
     <main>
-        <section class="category">
-            <h2>Neuropathic Pain Management</h2>
+        <section>
+            <h2 class="product-category">Neuropathic Pain Management</h2>
             <table>
                 <thead>
                     <tr>
@@ -94,7 +140,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Easily-PM</td>
+                        <td><a href="/products/easily-pm">Easily-PM</a></td>
                         <td>Pregabalin + Epalrestat + Methylcobalamin</td>
                         <td>Film-coated Tablet</td>
                         <td>150mg + 150mg + 1500mcg</td>
@@ -105,8 +151,8 @@
             </table>
         </section>
 
-        <section class="category">
-            <h2>Gastrointestinal Health</h2>
+        <section>
+            <h2 class="product-category">Diabetes Management</h2>
             <table>
                 <thead>
                     <tr>
@@ -120,7 +166,41 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Simtol</td>
+                        <td><a href="/products/sayomax">Sayomax</a></td>
+                        <td>Sitagliptin Phosphate + Metformin HCl</td>
+                        <td>Film-coated Tablet</td>
+                        <td>Variable strengths</td>
+                        <td>10x10</td>
+                        <td class="prescription">Yes</td>
+                    </tr>
+                    <tr>
+                        <td><a href="/products/vogmix">Vogmix 0.3</a></td>
+                        <td>Voglibose</td>
+                        <td>Uncoated Tablet</td>
+                        <td>0.3mg</td>
+                        <td>10x10</td>
+                        <td class="prescription">Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2 class="product-category">Gastrointestinal Health</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Composition</th>
+                        <th>Dosage Form</th>
+                        <th>Strength</th>
+                        <th>Pack Size</th>
+                        <th>Prescription</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="/products/simtol">Simtol</a></td>
                         <td>Simethicone</td>
                         <td>Softgel Capsule</td>
                         <td>140mg</td>
@@ -128,7 +208,7 @@
                         <td class="prescription">Yes</td>
                     </tr>
                     <tr>
-                        <td>PCOP-2</td>
+                        <td><a href="/products/pcop">PCOP-2</a></td>
                         <td>Prucalopride Succinate</td>
                         <td>Film-coated Tablet</td>
                         <td>Equivalent to Prucalopride</td>
@@ -139,8 +219,8 @@
             </table>
         </section>
 
-        <section class="category">
-            <h2>Diabetes Management</h2>
+        <section>
+            <h2 class="product-category">Bone & Joint Health</h2>
             <table>
                 <thead>
                     <tr>
@@ -154,41 +234,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Vogmix 0.3</td>
-                        <td>Voglibose</td>
-                        <td>Uncoated Tablet</td>
-                        <td>0.3mg</td>
-                        <td>10x10</td>
-                        <td class="prescription">Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Sayomax</td>
-                        <td>Sitagliptin Phosphate + Metformin HCl</td>
-                        <td>Film-coated Tablet</td>
-                        <td>Variable strengths</td>
-                        <td>10x10</td>
-                        <td class="prescription">Yes</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section class="category">
-            <h2>Bone & Joint Health</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Composition</th>
-                        <th>Dosage Form</th>
-                        <th>Strength</th>
-                        <th>Pack Size</th>
-                        <th>Prescription</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Doronec-150</td>
+                        <td><a href="/products/doronec">Doronec-150</a></td>
                         <td>Ibandronic Acid</td>
                         <td>Film-coated Tablet</td>
                         <td>150mg equivalent</td>
@@ -196,27 +242,19 @@
                         <td class="prescription">Yes</td>
                     </tr>
                     <tr>
-                        <td>Mynox 4K</td>
+                        <td><a href="/products/mynox">Mynox 4K</a></td>
                         <td>Cholecalciferol</td>
                         <td>Mouth Dissolving Tablet</td>
                         <td>4,000 IU</td>
                         <td>10x10</td>
                         <td>No</td>
                     </tr>
-                    <tr>
-                        <td>Zydec</td>
-                        <td>Calcium Dobesilate Monohydrate</td>
-                        <td>Hard Gelatin Capsule</td>
-                        <td>500mg</td>
-                        <td>10x10</td>
-                        <td class="prescription">Yes</td>
-                    </tr>
                 </tbody>
             </table>
         </section>
 
-        <section class="category">
-            <h2>Other Therapeutics</h2>
+        <section>
+            <h2 class="product-category">Ophthalmic Solutions</h2>
             <table>
                 <thead>
                     <tr>
@@ -230,15 +268,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Loxwin-200</td>
-                        <td>Oxaceprol</td>
-                        <td>Hard Gelatin Capsule</td>
-                        <td>200mg</td>
-                        <td>10x10</td>
-                        <td class="prescription">Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Polycool</td>
+                        <td><a href="/products/polycool">Polycool</a></td>
                         <td>PEG 400 + Propylene Glycol</td>
                         <td>Eye Drops</td>
                         <td>0.4% w/v + 0.3% w/v</td>
