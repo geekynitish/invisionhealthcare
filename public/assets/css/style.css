@@ -158,6 +158,9 @@ p { margin: 0 0 1em; }
 .btn-outline:hover { background: rgba(255,255,255,0.12); color: #fff; }
 .btn-primary { background: var(--color-primary); color: #fff; }
 .btn-primary:hover { background: var(--color-primary-dark); color: #fff; }
+.btn-whatsapp { background: #25d366; color: #fff; }
+.btn-whatsapp:hover { background: #1da851; color: #fff; }
+.btn-whatsapp svg { flex-shrink: 0; }
 
 .hero-stats { display: flex; gap: 28px; margin-top: 32px; flex-wrap: wrap; }
 .hero-stats div strong { display: block; font-size: 1.6rem; color: #fff; }
