@@ -53,7 +53,7 @@ def header(prefix, active):
     return f'''<header class="site-header">
   <div class="wrap">
     <a href="{prefix}index.html" class="brand">
-      <img src="{prefix}assets/img/logo.png" alt="Invision Healthcare logo" width="42" height="42">
+      <img src="{prefix}assets/img/logo.png" alt="Invision Healthcare logo" width="58" height="58">
       <span class="brand-text"><strong>Invision Healthcare</strong><span>WHO-GMP Certified Pharma</span></span>
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
@@ -102,8 +102,9 @@ def footer(prefix):
 <script src="{prefix}assets/js/main.js"></script>
 '''
 
-def page(title, description, canonical_path, prefix, active, body, extra_head=""):
+def page(title, description, canonical_path, prefix, active, body, extra_head="", keywords=""):
     canonical = f"{DOMAIN}/{canonical_path}" if canonical_path else DOMAIN + "/"
+    keywords_tag = f'<meta name="keywords" content="{esc(keywords)}">\n' if keywords else ""
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -111,14 +112,22 @@ def page(title, description, canonical_path, prefix, active, body, extra_head=""
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
+{keywords_tag}<meta name="author" content="Invision Healthcare">
+<meta name="theme-color" content="#0b5fae">
 <link rel="canonical" href="{canonical}">
 <link rel="icon" type="image/x-icon" href="{prefix}favicon.ico">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:site_name" content="Invision Healthcare">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{DOMAIN}/assets/img/logo.png">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{esc(title)}">
+<meta name="twitter:description" content="{esc(description)}">
+<meta name="twitter:image" content="{DOMAIN}/assets/img/logo.png">
 <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
 <link href="{prefix}assets/css/style.css" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-L7TDWK9TQP"></script>
@@ -240,9 +249,20 @@ document.querySelectorAll('.gallery-thumbs button').forEach(function(btn){{
 }});
 </script>
 '''
+    breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{DOMAIN}/"},
+            {"@type": "ListItem", "position": 2, "name": "Products", "item": f"{DOMAIN}/products.html"},
+            {"@type": "ListItem", "position": 3, "name": p["name"], "item": f"{DOMAIN}/product/{p['slug']}.html"},
+        ],
+    }
+    extra_head += f'<script type="application/ld+json">{json.dumps(breadcrumb)}</script>\n'
     title = f"{p['name']} - {p['composition']} | Invision Healthcare"
     desc = f"{p['name']} ({p['composition']}) by Invision Healthcare. {p['shortDescription']} Pack: {p['packSize']}."
-    html = page(title, desc, f"product/{p['slug']}.html", prefix, "products", body, extra_head)
+    kw = ", ".join([p["name"].lower(), p["composition"].lower(), p["category"].lower(), "invision healthcare"] + p.get("keywords", []))
+    html = page(title, desc, f"product/{p['slug']}.html", prefix, "products", body, extra_head, keywords=kw)
     with open(os.path.join(PUBLIC, "product", f"{p['slug']}.html"), "w") as f:
         f.write(html)
 
@@ -279,10 +299,11 @@ def build_products_page():
 </main>
 <script src="{prefix}assets/js/search.js"></script>
 '''
+    kw = ", ".join([p["name"].lower() for p in PRODUCTS] + [c.lower() for c in CATEGORY_ORDER] + ["invision healthcare", "pharmaceutical products india"])
     html = page(
         "All Medicines | Invision Healthcare | WHO-GMP Certified Pharmaceuticals",
         "Browse and search the complete range of WHO-GMP certified medicines from Invision Healthcare by brand name, salt composition, or category.",
-        "products.html", prefix, "products", body,
+        "products.html", prefix, "products", body, keywords=kw,
     )
     with open(os.path.join(PUBLIC, "products.html"), "w") as f:
         f.write(html)
@@ -291,9 +312,13 @@ build_products_page()
 
 # ---------------- sitemap.xml ----------------
 def build_sitemap():
+    import datetime
+    today = datetime.date.today().isoformat()
     urls = ["", "about.html", "products.html", "contact.html"] + [f"product/{p['slug']}.html" for p in PRODUCTS]
     items = "\n".join(
-        f"  <url><loc>{DOMAIN}/{u}</loc><priority>{'1.00' if u=='' else '0.80' if 'product/' not in u else '0.64'}</priority></url>"
+        f"  <url><loc>{DOMAIN}/{u}</loc><lastmod>{today}</lastmod>"
+        f"<changefreq>{'daily' if u=='' else 'weekly' if u=='products.html' else 'monthly'}</changefreq>"
+        f"<priority>{'1.00' if u=='' else '0.80' if 'product/' not in u else '0.64'}</priority></url>"
         for u in urls
     )
     xml = f'''<?xml version="1.0" encoding="UTF-8"?>
@@ -389,10 +414,42 @@ def build_home():
   </section>
 </main>
 '''
+    org_schema = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Invision Healthcare",
+        "url": DOMAIN + "/",
+        "logo": f"{DOMAIN}/assets/img/logo.png",
+        "telephone": "+91-9560093447",
+        "email": "invisionhealthcare@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "No. 141, Sector 3, Pocket 16, Dwarka",
+            "addressLocality": "New Delhi",
+            "postalCode": "110078",
+            "addressCountry": "IN",
+        },
+    }
+    website_schema = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Invision Healthcare",
+        "url": DOMAIN + "/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": f"{DOMAIN}/products.html?q={{search_term_string}}",
+            "query-input": "required name=search_term_string",
+        },
+    }
+    extra_head = (
+        f'<script type="application/ld+json">{json.dumps(org_schema)}</script>\n'
+        f'<script type="application/ld+json">{json.dumps(website_schema)}</script>\n'
+    )
+    kw = ", ".join([p["name"].lower() for p in PRODUCTS] + [c.lower() for c in CATEGORY_ORDER] + ["invision healthcare", "who-gmp pharmaceutical company india"])
     html = page(
         "Invision Healthcare | WHO-GMP Certified Pharmaceutical Company | Search Our Medicines",
         "Invision Healthcare is a WHO-GMP & ISO 9001:2015 certified pharmaceutical company. Browse and search our full range of diabetes, neuro care, gastro, bone & joint and eye care medicines.",
-        "", prefix, "home", body,
+        "", prefix, "home", body, extra_head, keywords=kw,
     )
     with open(os.path.join(PUBLIC, "index.html"), "w") as f:
         f.write(html)
@@ -442,6 +499,7 @@ def build_about():
         "About Invision Healthcare | WHO-GMP Certified Pharmaceutical Company",
         "Invision Healthcare is a WHO-GMP & ISO 9001:2015 certified pharmaceutical company based in New Delhi, manufacturing medicines across six therapeutic categories.",
         "about.html", prefix, "about", body,
+        keywords="invision healthcare, who-gmp pharmaceutical company, pharma company new delhi, about invision healthcare",
     )
     with open(os.path.join(PUBLIC, "about.html"), "w") as f:
         f.write(html)
@@ -479,6 +537,7 @@ def build_contact():
         "Contact Invision Healthcare | WHO-GMP Certified Pharmaceuticals",
         "Get in touch with Invision Healthcare for product enquiries, stockist and distributor partnerships. Based in Dwarka, New Delhi.",
         "contact.html", prefix, "contact", body,
+        keywords="contact invision healthcare, invision healthcare address, invision healthcare phone number, pharma stockist distributor delhi",
     )
     with open(os.path.join(PUBLIC, "contact.html"), "w") as f:
         f.write(html)

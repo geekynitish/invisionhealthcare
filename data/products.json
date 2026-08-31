@@ -19,7 +19,7 @@
     "rx": true,
     "shortDescription": "Bronchodilator with mucolytic action for respiratory conditions.",
     "uses": "Used in the management of bronchial asthma, chronic bronchitis and COPD, helping ease breathing and clear mucus, under medical supervision.",
-    "keywords": ["doxofylline", "ambroxol", "asthma", "copd", "bronchodilator", "respiratory tablets"]
+    "keywords": ["doxofylline", "ambroxol", "asthma", "copd", "bronchodilator", "respiratory tablets", "doxofyl-am", "doxofyl am"]
   },
   {
     "slug": "nuvinor",
@@ -41,7 +41,7 @@
     "rx": true,
     "shortDescription": "Anti-inflammatory capsule for joint pain and osteoarthritis.",
     "uses": "Used for the relief of joint pain and inflammation associated with osteoarthritis, under medical supervision.",
-    "keywords": ["oxaceprol", "joint pain", "osteoarthritis", "loxwin"]
+    "keywords": ["oxaceprol", "joint pain", "osteoarthritis", "loxwin", "oxapro-j", "oxapro j"]
   },
   {
     "slug": "zydec",
@@ -52,7 +52,7 @@
     "rx": true,
     "shortDescription": "Vasoprotective capsule for chronic venous disorders and microcirculation.",
     "uses": "Used for chronic venous insufficiency and diabetic retinopathy by improving microcirculation and capillary resistance. Schedule H prescription drug.",
-    "keywords": ["calcium dobesilate", "venous disorder", "retinopathy", "zydec", "microcirculation"]
+    "keywords": ["calcium dobesilate", "venous disorder", "retinopathy", "zydec", "microcirculation", "caldo-500", "caldo 500"]
   },
   {
     "slug": "easily-pm",
@@ -129,7 +129,7 @@
     "rx": true,
     "shortDescription": "Antihistamine eye drops for allergic conjunctivitis.",
     "uses": "Used for the relief of itching and redness caused by allergic conjunctivitis, under medical supervision.",
-    "keywords": ["bepotastine", "eye drops", "allergic conjunctivitis", "betop"]
+    "keywords": ["bepotastine", "eye drops", "allergic conjunctivitis", "betop", "bepolast"]
   },
   {
     "slug": "hylovision",
