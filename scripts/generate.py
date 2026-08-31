@@ -103,9 +103,10 @@ def footer(prefix):
 <script src="{prefix}assets/js/main.js"></script>
 '''
 
-def page(title, description, canonical_path, prefix, active, body, extra_head="", keywords=""):
+def page(title, description, canonical_path, prefix, active, body, extra_head="", keywords="", noindex=False):
     canonical = f"{DOMAIN}/{canonical_path}" if canonical_path else DOMAIN + "/"
     keywords_tag = f'<meta name="keywords" content="{esc(keywords)}">\n' if keywords else ""
+    robots = "noindex, nofollow" if noindex else "index, follow, max-image-preview:large"
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,7 +118,7 @@ def page(title, description, canonical_path, prefix, active, body, extra_head=""
 <meta name="theme-color" content="#0b5fae">
 <link rel="canonical" href="{canonical}">
 <link rel="icon" type="image/x-icon" href="{prefix}favicon.ico">
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots" content="{robots}">
 <meta property="og:site_name" content="Invision Healthcare">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(description)}">
@@ -544,5 +545,51 @@ def build_contact():
         f.write(html)
 
 build_contact()
+
+# ---------------- 404.html ----------------
+def build_404():
+    prefix = ""
+    body = f'''<main>
+  <section class="section" style="text-align:center;">
+    <div class="wrap">
+      <span class="badge" style="background:var(--color-bg);color:var(--color-primary);">404</span>
+      <h1>Page not found</h1>
+      <p>The page you are looking for may have been moved or does not exist.</p>
+      <div class="hero-cta" style="justify-content:center;">
+        <a class="btn btn-primary" href="{prefix}products.html">Browse All Products</a>
+        <a class="btn btn-outline" style="border-color:var(--color-line);color:var(--color-primary);" href="{prefix}index.html">Go to Homepage</a>
+      </div>
+    </div>
+  </section>
+</main>
+'''
+    html = page(
+        "Page Not Found | Invision Healthcare",
+        "The page you are looking for could not be found on Invision Healthcare.",
+        "404.html", prefix, "", body, noindex=True,
+    )
+    with open(os.path.join(PUBLIC, "404.html"), "w") as f:
+        f.write(html)
+
+build_404()
+
+# ---------------- _headers (Cloudflare Pages caching rules) ----------------
+def build_headers():
+    content = '''/assets/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/css/*
+  Cache-Control: public, max-age=86400
+
+/assets/js/*
+  Cache-Control: public, max-age=86400
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+'''
+    with open(os.path.join(PUBLIC, "_headers"), "w") as f:
+        f.write(content)
+
+build_headers()
 
 print(f"Generated {len(PRODUCTS)} product pages, products.html, index.html, about.html, contact.html, sitemap.xml")
