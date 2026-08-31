@@ -33,6 +33,7 @@ ICON_PHONE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-
 ICON_MAIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>'
 ICON_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>'
 ICON_CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>'
+ICON_IMAGE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>'
 
 def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;"))
@@ -134,12 +135,16 @@ def page(title, description, canonical_path, prefix, active, body, extra_head=""
 # ---------------- Product card partial ----------------
 def product_card(p, prefix):
     img = f"{prefix}assets/img/products/{p['slug']}/1"
-    return f'''<article class="product-card" data-category="{esc(p['category'])}" data-search="{haystack(p)}">
-  <a class="thumb" href="{prefix}product/{p['slug']}.html">
-    <picture>
+    if p.get("hasImage", True):
+        thumb_inner = f'''<picture>
       <source srcset="{img}.webp" type="image/webp">
       <img src="{img}.jpg" alt="{esc(p['name'])} - {esc(p['composition'])} box" width="480" height="360" loading="lazy">
-    </picture>
+    </picture>'''
+    else:
+        thumb_inner = f'<div class="thumb-placeholder">{ICON_IMAGE}<span>Image coming soon</span></div>'
+    return f'''<article class="product-card" data-category="{esc(p['category'])}" data-search="{haystack(p)}">
+  <a class="thumb" href="{prefix}product/{p['slug']}.html">
+    {thumb_inner}
   </a>
   <div class="body">
     <span class="cat">{esc(p['category'])}</span>
@@ -159,11 +164,7 @@ def build_product_page(p):
     if len(others) < 3:
         others += [x for x in PRODUCTS if x["slug"] != p["slug"] and x not in others][: 3 - len(others)]
     img_base = f"{prefix}assets/img/products/{p['slug']}"
-    thumbs = "\n".join(
-        f'<button type="button" data-full="{img_base}/{i}.jpg" class="{"active" if i == 1 else ""}">'
-        f'<img src="{img_base}/{i}.jpg" alt="{esc(p["name"])} view {i}" width="64" height="64"></button>'
-        for i in (1, 2)
-    )
+    has_image = p.get("hasImage", True)
     schema = {
         "@context": "https://schema.org",
         "@type": "Drug",
@@ -171,21 +172,34 @@ def build_product_page(p):
         "activeIngredient": p["composition"],
         "description": p["uses"],
         "manufacturer": {"@type": "Organization", "name": "Invision Healthcare"},
-        "image": f"{DOMAIN}/assets/img/products/{p['slug']}/1.jpg",
         "url": f"{DOMAIN}/product/{p['slug']}.html",
     }
+    if has_image:
+        schema["image"] = f"{DOMAIN}/assets/img/products/{p['slug']}/1.jpg"
     extra_head = f'<script type="application/ld+json">{json.dumps(schema)}</script>\n'
-    body = f'''<main>
-  <div class="wrap section">
-    <div class="product-detail">
-      <div>
-        <div class="gallery-main" id="galleryMain">
+    if has_image:
+        thumbs = "\n".join(
+            f'<button type="button" data-full="{img_base}/{i}.jpg" class="{"active" if i == 1 else ""}">'
+            f'<img src="{img_base}/{i}.jpg" alt="{esc(p["name"])} view {i}" width="64" height="64"></button>'
+            for i in (1, 2)
+        )
+        gallery_html = f'''<div class="gallery-main" id="galleryMain">
           <picture>
             <source id="galleryWebp" srcset="{img_base}/1.webp" type="image/webp">
             <img id="galleryImg" src="{img_base}/1.jpg" alt="{esc(p['name'])} - {esc(p['composition'])}" width="500" height="500">
           </picture>
         </div>
-        <div class="gallery-thumbs">{thumbs}</div>
+        <div class="gallery-thumbs">{thumbs}</div>'''
+    else:
+        gallery_html = f'''<div class="gallery-main gallery-placeholder">
+          {ICON_IMAGE}
+          <p>Product image coming soon</p>
+        </div>'''
+    body = f'''<main>
+  <div class="wrap section">
+    <div class="product-detail">
+      <div>
+        {gallery_html}
       </div>
       <div>
         <span class="pd-category">{esc(p['category'])}</span>

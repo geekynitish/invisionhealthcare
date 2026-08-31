@@ -163,5 +163,41 @@
     "shortDescription": "Lubricant eye drops for dry eye relief.",
     "uses": "Used for the relief of dry, irritated eyes by providing long-lasting lubrication.",
     "keywords": ["sodium hyaluronate", "dry eyes", "solomax", "lubricant eye drops"]
+  },
+  {
+    "slug": "nurokind-p",
+    "name": "Nurokind-P",
+    "composition": "Pregabalin 75mg & Methylcobalamin 1500mcg Tablets",
+    "category": "Neuro & Vitamin Care",
+    "packSize": "10 x 10 Tablets",
+    "rx": true,
+    "hasImage": false,
+    "shortDescription": "Pregabalin and Methylcobalamin combination for chronic neuropathic pain.",
+    "uses": "Used for the management of chronic neuropathic pain conditions, including post-herpetic neuralgia, under medical supervision.",
+    "keywords": ["pregabalin", "methylcobalamin", "neuropathic pain", "nurokind", "post-herpetic neuralgia"]
+  },
+  {
+    "slug": "prucalo-m",
+    "name": "Prucalo-M",
+    "composition": "Prucalopride 1mg Tablets",
+    "category": "Gastro Care",
+    "packSize": "10 x 10 Tablets",
+    "rx": true,
+    "hasImage": false,
+    "shortDescription": "Selective serotonin receptor agonist for chronic constipation.",
+    "uses": "Used for the treatment of chronic constipation in adults by improving bowel motility, under medical supervision.",
+    "keywords": ["prucalopride", "constipation", "prucalo-m", "gi motility"]
+  },
+  {
+    "slug": "sodium-hyaluronate-injection",
+    "name": "Sodium Hyaluronate Injection",
+    "composition": "Sodium Hyaluronate 20mg/2ml Injection",
+    "category": "Bone & Joint Care",
+    "packSize": "Pre-filled Syringe, 2ml",
+    "rx": true,
+    "hasImage": false,
+    "shortDescription": "Viscosupplementation injection for knee osteoarthritis.",
+    "uses": "Used for the treatment of osteoarthritis of the knee joint via intra-articular injection. For professional/clinical administration only, under medical supervision.",
+    "keywords": ["sodium hyaluronate", "viscosupplementation", "knee osteoarthritis", "joint injection"]
   }
 ]
